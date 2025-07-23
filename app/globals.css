@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #111111; /* A very dark gray, almost black */
+  --foreground: #F0E68C; /* Light gold text */
+  --color-gold: #FFD700;    /* Main gold color */
+  --color-card: #1F2937; /* Dark gray for cards */
 }
 
 @theme inline {
@@ -14,8 +16,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #111111;
+    --foreground: #F0E68C;
   }
 }
 
@@ -23,4 +25,152 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Estilos para los enlaces del Navbar */
+.nav-link {
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+  color: var(--color-gold);
+}
+
+.mobile-nav-link {
+  color: white;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.mobile-nav-link:hover {
+  background-color: rgba(0,0,0,0.2);
+  color: var(--color-gold);
+}
+/* Estilo para el botón del Hero */
+.hero-button {
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.hero-button:hover {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--background); /* Usa el color de fondo oscuro para el texto */
+  transform: scale(1.05);
+}
+
+/* Custom utility classes for your theme */
+.bg-negro-el-pollo {
+  background-color: var(--background);
+}
+
+.bg-dorado-el-pollo {
+  background-color: var(--color-gold);
+}
+
+.text-dorado-el-pollo {
+  color: var(--color-gold);
+}
+
+.text-dorado-el-pollo-claro {
+  color: var(--foreground);
+}
+
+.bg-card-dark {
+  background-color: var(--color-card);
+}
+
+
+/* Estilos para el Carrusel Embla */
+.embla__container {
+  display: flex;
+  gap: 1.5rem;
+}
+.embla__slide {
+  flex: 0 0 90%;
+}
+
+@media (min-width: 768px) {
+  .embla__slide {
+    flex: 0 0 45%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .embla__slide {
+    flex: 0 0 31%;
+  }
+}
+
+.title-container .title,
+.title-container .subtitle {
+  transition: color 0.3s ease-in-out;
+}
+
+.title-container:hover .title {
+  color: var(--color-gold);
+}
+
+.title-container:hover .subtitle {
+  color: var(--foreground); /* Usa la variable para el dorado claro */
+}
+
+.button-videoteca:hover {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #111111; /* Use the dark background color for text */
+}
+
+/* Hover effect for the calendar button */
+.button-calendario:hover {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: #111111; /* Use the dark background color for text */
+}
+
+/* Hover effect for the video card title */
+.video-card-link:hover .video-card-title {
+  color: var(--color-gold);
+}
+
+
+/* Footer Styles */
+.footer-text, .footer-subtext {
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+
+.footer-container:hover .footer-text {
+  color: var(--color-gold);
+}
+
+.footer-container:hover .footer-subtext {
+  color: var(--color-foreground);
+}
+
+/* Estilo para los botones principales (borde blanco -> relleno dorado) */
+.main-button {
+  border: 2px solid white;
+  background-color: transparent;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+.main-button:hover {
+  background-color: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--background); /* Usa el color de fondo oscuro para el texto */
+  transform: scale(1.05);
+}
+
+/* Contact Page Link Style */
+.contact-link {
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+
+.contact-link:hover {
+  color: var(--color-gold);
 }

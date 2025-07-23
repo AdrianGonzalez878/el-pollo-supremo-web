@@ -1,103 +1,64 @@
-import Image from "next/image";
+// app/page.tsx
+import { Hero } from '@/components/Hero';
+import { UpcomingGames } from '@/components/UpcomingGames';
+import { FeaturedVideos } from '@/components/FeaturedVideos';
+import { Sponsors } from '@/components/Sponsors';
+import { FeaturedTournament } from '@/components/FeaturedTournament';
+import { StatsSection } from '@/components/StatsSection';
+import { AnimateOnScroll } from '@/components/AnimateOnScroll'; // 1. Importamos el componente de animación
 
-export default function Home() {
+const STRAPI_URL = 'http://localhost:1337';
+
+async function getHomepageData() {
+  try {
+    const endpoint = `${STRAPI_URL}/api/homepage`;
+    const params = '?populate[0]=hero_image&populate[1]=flyer_torneo';
+    const res = await fetch(endpoint + params);
+    if (!res.ok) return null;
+    return res.json();
+  } catch (error) {
+    console.error("Error fetching homepage data:", error);
+    return null;
+  }
+}
+
+export default async function HomePage() {
+  const homepageData = await getHomepageData();
+
+  const heroImageUrl = homepageData?.data?.hero_image?.url
+    ? `${STRAPI_URL}${homepageData.data.hero_image.url}`
+    : '/placeholder-basketball.jpg';
+
+  const flyerImageUrl = homepageData?.data?.flyer_torneo?.url
+    ? `${STRAPI_URL}${homepageData.data.flyer_torneo.url}`
+    : null;
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+    {/* 2. Envolvemos cada sección con AnimateOnScroll */}
+    <AnimateOnScroll>
+      <Hero imageUrl={heroImageUrl} />
+    </AnimateOnScroll>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      <AnimateOnScroll>
+        <StatsSection />
+      </AnimateOnScroll>
+
+      <AnimateOnScroll>
+        <FeaturedTournament imageUrl={flyerImageUrl} />
+      </AnimateOnScroll>
+
+      <AnimateOnScroll>
+        <UpcomingGames />
+      </AnimateOnScroll>
+
+      <AnimateOnScroll>
+        <FeaturedVideos />
+      </AnimateOnScroll>
+
+      <AnimateOnScroll>
+        <Sponsors />
+      </AnimateOnScroll>
+    </>
   );
 }
