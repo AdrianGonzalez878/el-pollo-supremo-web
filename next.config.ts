@@ -14,6 +14,12 @@ const nextConfig = {
         port: '',
         pathname: '/vi/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'pollo-supremo-cms.onrender.com', // Add this
+        port: '',
+        pathname: '/uploads/**',
+      },
     ],
   },
 };
