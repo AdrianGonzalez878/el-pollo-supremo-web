@@ -1,8 +1,11 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaPhone } from 'react-icons/fa';
+import { useState, useEffect } from 'react';
 
-const STRAPI_URL = 'http://localhost:1337';
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 interface Sponsor {
   id: number;
@@ -14,26 +17,30 @@ interface Sponsor {
 async function getAllSponsors(): Promise<Sponsor[]> {
   try {
     const endpoint = `${STRAPI_URL}/api/patrocinadors?populate=logo`;
-    const res = await fetch(endpoint);
-    if (!res.ok) throw new Error('Failed to fetch sponsors');
+    const res = await fetch(endpoint, { cache: 'no-store' });
+
+    if (!res.ok) {
+      console.error("Error response from Strapi:", res.status, res.statusText);
+      throw new Error('Failed to fetch sponsors');
+    }
 
     const jsonResponse = await res.json();
-    const sponsorsData = jsonResponse.data.filter((sponsor: any) => sponsor);
+    const sponsorsData = jsonResponse.data || [];
 
-    // CORRECTED MAPPING: Reading from the flat structure
     const formattedSponsors: Sponsor[] = sponsorsData.map((sponsor: any) => {
-      const logoUrl = sponsor.logo?.url
-        ? `${STRAPI_URL}${sponsor.logo.url}`
+      const attributes = sponsor.attributes;
+      const logoData = attributes.logo?.data?.attributes;
+      const logoUrl = logoData?.url
+        ? `${STRAPI_URL}${logoData.url}`
         : '/placeholder-logo.png';
 
       return {
         id: sponsor.id,
-        nombre: sponsor.nombre,
+        nombre: attributes.nombre,
         logoUrl: logoUrl,
-        numero_telefono: sponsor.numero_telefono,
+        numero_telefono: attributes.numero_telefono,
       };
     });
-
     return formattedSponsors;
   } catch (error) {
     console.error("Error fetching sponsors:", error);
@@ -41,8 +48,24 @@ async function getAllSponsors(): Promise<Sponsor[]> {
   }
 }
 
-export default async function PatrocinadoresPage() {
-  const sponsors = await getAllSponsors();
+export default function PatrocinadoresPage() {
+  const [sponsors, setSponsors] = useState<Sponsor[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    getAllSponsors().then(data => {
+      setSponsors(data);
+      setIsLoading(false);
+    });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="bg-negro-el-pollo text-white min-h-screen flex items-center justify-center">
+        <p className="text-xl text-dorado-el-pollo-claro">Cargando patrocinadores...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-negro-el-pollo text-white min-h-screen">
@@ -84,10 +107,9 @@ export default async function PatrocinadoresPage() {
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-400">Aún no hay patrocinadores para mostrar.</p>
+          <p className="text-center text-gray-400">No hay patrocinadores para mostrar.</p>
         )}
-
-        {/* ... (Your "Become a Sponsor" section) ... */}
+        
         <div className="mt-20 bg-card-dark rounded-lg shadow-2xl overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2">
             <div className="p-8 md:p-12 flex flex-col justify-center text-center md:text-left">
@@ -108,12 +130,11 @@ export default async function PatrocinadoresPage() {
                 src="/become-sponsor-placeholder.jpg"
                 alt="Aficionados al básquetbol de El Pollo Supremo"
                 fill
-                className="object-contain p-4"
+                className="object-cover"
               />
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
