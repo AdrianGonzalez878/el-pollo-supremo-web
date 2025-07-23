@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaPhone } from 'react-icons/fa';
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL; // Usamos la variable de entorno
+const STRAPI_URL = 'http://localhost:1337';
 
 interface Sponsor {
   id: number;
@@ -14,35 +14,29 @@ interface Sponsor {
 async function getAllSponsors(): Promise<Sponsor[]> {
   try {
     const endpoint = `${STRAPI_URL}/api/patrocinadors?populate=logo`;
-    const res = await fetch(endpoint, { cache: 'no-store' }); // Añadimos no-store para evitar caché
-
-    if (!res.ok) {
-      console.error("Error en la respuesta de Strapi:", res.status, res.statusText);
-      throw new Error('Failed to fetch sponsors');
-    }
+    const res = await fetch(endpoint);
+    if (!res.ok) throw new Error('Failed to fetch sponsors');
 
     const jsonResponse = await res.json();
-    const sponsorsData = jsonResponse.data || [];
+    const sponsorsData = jsonResponse.data.filter((sponsor: any) => sponsor);
 
+    // CORRECTED MAPPING: Reading from the flat structure
     const formattedSponsors: Sponsor[] = sponsorsData.map((sponsor: any) => {
-      // Lógica a prueba de fallos: funciona con o sin 'attributes'
-      const attributes = sponsor.attributes || sponsor;
-      
-      const logoData = attributes.logo?.data?.attributes || attributes.logo?.data;
-      const logoUrl = logoData?.url
-        ? `${STRAPI_URL}${logoData.url}`
+      const logoUrl = sponsor.logo?.url
+        ? `${STRAPI_URL}${sponsor.logo.url}`
         : '/placeholder-logo.png';
 
       return {
         id: sponsor.id,
-        nombre: attributes.nombre,
+        nombre: sponsor.nombre,
         logoUrl: logoUrl,
-        numero_telefono: attributes.numero_telefono,
+        numero_telefono: sponsor.numero_telefono,
       };
     });
+
     return formattedSponsors;
   } catch (error) {
-    console.error("Error completo al obtener patrocinadores:", error);
+    console.error("Error fetching sponsors:", error);
     return [];
   }
 }
@@ -90,10 +84,36 @@ export default async function PatrocinadoresPage() {
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-400">No hay patrocinadores para mostrar.</p>
+          <p className="text-center text-gray-400">Aún no hay patrocinadores para mostrar.</p>
         )}
 
-        {/* ... (Sección "Conviértete en Patrocinador") ... */}
+        {/* ... (Your "Become a Sponsor" section) ... */}
+        <div className="mt-20 bg-card-dark rounded-lg shadow-2xl overflow-hidden">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="p-8 md:p-12 flex flex-col justify-center text-center md:text-left">
+              <h2 className="text-2xl md:text-3xl font-bold text-dorado-el-pollo mb-4">
+                ¿Quieres ser parte de la familia?
+              </h2>
+              <p className="text-dorado-el-pollo-claro mb-8">
+                Expón tu marca ante miles de aficionados al básquetbol en todo el estado y apoya el deporte local. ¡Contáctanos para conocer nuestros paquetes de patrocinio!
+              </p>
+              <div className="mt-auto">
+                <Link href="/contacto" className="main-button font-bold py-3 px-8 rounded-full text-lg inline-block">
+                  Conviértete en Patrocinador
+                </Link>
+              </div>
+            </div>
+            <div className="relative min-h-[300px] md:min-h-full">
+              <Image
+                src="/become-sponsor-placeholder.jpg"
+                alt="Aficionados al básquetbol de El Pollo Supremo"
+                fill
+                className="object-contain p-4"
+              />
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
