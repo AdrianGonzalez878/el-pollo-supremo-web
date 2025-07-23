@@ -16,7 +16,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'pollo-supremo-cms.onrender.com', // Add this
+        hostname: 'el-pollo-supremo-cms.onrender.com', // Add this
         port: '',
         pathname: '/uploads/**',
       },
