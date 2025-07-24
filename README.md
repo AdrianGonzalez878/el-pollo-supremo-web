@@ -1,96 +1,107 @@
-Sitio Web de El Pollo Supremo
-Este es el repositorio del sitio web oficial de "El Pollo Supremo", una plataforma de medios dedicada a la transmisión y difusión de torneos de básquetbol en Oaxaca, México. El proyecto está construido con un stack moderno usando Next.js para el frontend y Strapi como Headless CMS para la gestión de contenido.
+# Sitio Web de El Pollo Supremo 🏀
 
-Tecnologías Utilizadas
-Frontend:
+<div align="center">
+  <img src="el-pollo-supremo-web/public/logo.png" alt="Logo de El Pollo Supremo" width="200"/>
+</div>
 
-Next.js (React Framework)
+<p align="center">
+  <strong>La plataforma de medios oficial para el narrador de básquetbol oaxaqueño "El Pollo Supremo".</strong>
+  <br />
+  Un sitio web dinámico construido con un stack moderno para mostrar torneos, videos, patrocinadores y más.
+</p>
 
-TypeScript
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js">
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Strapi-2E7EEA?style=for-the-badge&logo=strapi&logoColor=white" alt="Strapi">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+</p>
 
-Tailwind CSS para estilos.
+---
 
-Framer Motion para animaciones.
+## 🚀 Descripción del Proyecto
 
-Embla Carousel para carruseles.
+Este proyecto es el sitio web oficial de "El Pollo Supremo", una popular marca de transmisiones de básquetbol en Oaxaca, México. La plataforma sirve como un centro de operaciones digital para centralizar todo el contenido, incluyendo:
+* Un calendario y archivo de torneos.
+* Una videoteca de partidos completos y jugadas destacadas.
+* Una sección para patrocinadores.
+* Una tienda en línea (maqueta) para venta de mercancía.
 
-React Icons para íconos.
+Todo el contenido es gestionado a través de un **Headless CMS (Strapi)**, permitiendo al cliente final actualizar el sitio en tiempo real sin necesidad de tocar el código.
 
-Backend (CMS):
+## 🛠️ Tecnologías Utilizadas
 
-Strapi (Headless CMS)
+- **Frontend:**
+  - **Framework:** Next.js (App Router)
+  - **Lenguaje:** TypeScript
+  - **Estilos:** Tailwind CSS
+  - **Animaciones:** Framer Motion
+  - **Carruseles:** Embla Carousel
+  - **Íconos:** React Icons
+- **Backend (CMS):**
+  - **Plataforma:** Strapi (Headless CMS)
+  - **Base de Datos (Local):** SQLite
 
-Base de datos SQLite (para desarrollo local)
+## 📋 Requisitos Previos
 
-Requisitos Previos
 Asegúrate de tener instalado el siguiente software en tu máquina:
+- **Node.js:** Versión 18.x o superior.
+- **npm** o **yarn** como gestor de paquetes.
 
-Node.js (versión 18 o superior)
+## ⚙️ Instalación y Ejecución Local
 
-npm o yarn como gestor de paquetes.
+El proyecto está dividido en dos partes: **backend** y **frontend**. Ambas deben estar corriendo simultáneamente.
 
-Instalación y Ejecución Local
-El proyecto está dividido en dos partes: el backend (Strapi) y el frontend (Next.js). Ambas deben estar corriendo simultáneamente para que el sitio funcione.
+### Parte 1: Backend (Strapi)
 
-Parte 1: Iniciar el Backend (Strapi)
-Navega a la carpeta del backend:
+1.  **Navegar a la carpeta del backend:**
+    ```bash
+    cd el-pollo-supremo-cms
+    ```
+2.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
+3.  **Iniciar el servidor de Strapi:**
+    ```bash
+    npm run develop
+    ```
+    - 🟢 El backend estará corriendo en `http://localhost:1337`.
+    - 🔑 La primera vez, crea tu cuenta de administrador en `http://localhost:1337/admin`.
+    - ✍️ Añade contenido (partidos, videos, etc.) para que el frontend pueda mostrarlo.
 
-Bash
+### Parte 2: Frontend (Next.js)
 
-cd el-pollo-supremo-cms
-Instala las dependencias:
+1.  **Abrir una nueva terminal.**
+2.  **Navegar a la carpeta del frontend:**
+    ```bash
+    cd el-pollo-supremo-web
+    ```
+3.  **Instalar dependencias:**
+    ```bash
+    npm install
+    ```
+4.  **Configurar variables de entorno:**
+    - Crea un archivo en la raíz de `el-pollo-supremo-web` llamado `.env.local`.
+    - Copia y pega el siguiente contenido, reemplazando con la información real:
+      ```env
+      NEXT_PUBLIC_STRAPI_URL="http://localhost:1337"
+      NEXT_PUBLIC_WHATSAPP_NUMBER="5219511234567"
+      ```
+5.  **Iniciar el servidor de desarrollo:**
+    ```bash
+    npm run dev
+    ```
+    - 🟢 El sitio web estará visible en `http://localhost:3000`.
 
-Bash
+## ⚡ Resumen para Correr el Proyecto
 
-npm install
-Inicia el servidor de Strapi en modo de desarrollo:
+Para poner en marcha el proyecto, necesitarás dos terminales abiertas:
 
-Bash
+- **Terminal 1 (Backend):** `cd el-pollo-supremo-cms && npm run develop`
+- **Terminal 2 (Frontend):** `cd el-pollo-supremo-web && npm run dev`
 
-npm run develop
-El backend ahora estará corriendo en http://localhost:1337. La primera vez que lo inicies, deberás crear una cuenta de administrador y añadir contenido (partidos, videos, etc.) para que el frontend tenga qué mostrar.
+Luego, abre `http://localhost:3000` en tu navegador.
 
-Parte 2: Iniciar el Frontend (Next.js)
-Abre una nueva terminal (deja la terminal del backend corriendo).
-
-Navega a la carpeta del frontend:
-
-Bash
-
-cd el-pollo-supremo-web
-Instala las dependencias:
-
-Bash
-
-npm install
-Configura las variables de entorno:
-
-Crea un archivo en la raíz de el-pollo-supremo-web llamado .env.local.
-
-Copia y pega el siguiente contenido, reemplazando con la información real:
-
-NEXT_PUBLIC_STRAPI_URL="http://localhost:1337"
-NEXT_PUBLIC_WHATSAPP_NUMBER="5219511234567"
-Inicia el servidor de desarrollo del frontend:
-
-Bash
-
-npm run dev
-El sitio web ahora estará visible y funcionando en http://localhost:3000.
-
-Resumen para Correr el Proyecto
-Para correr el proyecto en tu día a día, necesitarás dos terminales:
-
-Terminal 1:
-
-Bash
-
-cd el-pollo-supremo-cms
-npm run develop
-Terminal 2:
-
-Bash
-
-cd el-pollo-supremo-web
-npm run dev
-Luego, abre http://localhost:3000 en tu navegador.
+---
