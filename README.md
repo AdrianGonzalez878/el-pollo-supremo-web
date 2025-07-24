@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Sitio Web de El Pollo Supremo
+Este es el repositorio del sitio web oficial de "El Pollo Supremo", una plataforma de medios dedicada a la transmisión y difusión de torneos de básquetbol en Oaxaca, México. El proyecto está construido con un stack moderno usando Next.js para el frontend y Strapi como Headless CMS para la gestión de contenido.
 
-## Getting Started
+Tecnologías Utilizadas
+Frontend:
 
-First, run the development server:
+Next.js (React Framework)
 
-```bash
+TypeScript
+
+Tailwind CSS para estilos.
+
+Framer Motion para animaciones.
+
+Embla Carousel para carruseles.
+
+React Icons para íconos.
+
+Backend (CMS):
+
+Strapi (Headless CMS)
+
+Base de datos SQLite (para desarrollo local)
+
+Requisitos Previos
+Asegúrate de tener instalado el siguiente software en tu máquina:
+
+Node.js (versión 18 o superior)
+
+npm o yarn como gestor de paquetes.
+
+Instalación y Ejecución Local
+El proyecto está dividido en dos partes: el backend (Strapi) y el frontend (Next.js). Ambas deben estar corriendo simultáneamente para que el sitio funcione.
+
+Parte 1: Iniciar el Backend (Strapi)
+Navega a la carpeta del backend:
+
+Bash
+
+cd el-pollo-supremo-cms
+Instala las dependencias:
+
+Bash
+
+npm install
+Inicia el servidor de Strapi en modo de desarrollo:
+
+Bash
+
+npm run develop
+El backend ahora estará corriendo en http://localhost:1337. La primera vez que lo inicies, deberás crear una cuenta de administrador y añadir contenido (partidos, videos, etc.) para que el frontend tenga qué mostrar.
+
+Parte 2: Iniciar el Frontend (Next.js)
+Abre una nueva terminal (deja la terminal del backend corriendo).
+
+Navega a la carpeta del frontend:
+
+Bash
+
+cd el-pollo-supremo-web
+Instala las dependencias:
+
+Bash
+
+npm install
+Configura las variables de entorno:
+
+Crea un archivo en la raíz de el-pollo-supremo-web llamado .env.local.
+
+Copia y pega el siguiente contenido, reemplazando con la información real:
+
+NEXT_PUBLIC_STRAPI_URL="http://localhost:1337"
+NEXT_PUBLIC_WHATSAPP_NUMBER="5219511234567"
+Inicia el servidor de desarrollo del frontend:
+
+Bash
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+El sitio web ahora estará visible y funcionando en http://localhost:3000.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Resumen para Correr el Proyecto
+Para correr el proyecto en tu día a día, necesitarás dos terminales:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Terminal 1:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Bash
 
-## Learn More
+cd el-pollo-supremo-cms
+npm run develop
+Terminal 2:
 
-To learn more about Next.js, take a look at the following resources:
+Bash
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+cd el-pollo-supremo-web
+npm run dev
+Luego, abre http://localhost:3000 en tu navegador.
