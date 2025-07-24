@@ -1,7 +1,7 @@
 # Sitio Web de El Pollo Supremo 🏀
 
 <div align="center">
-  <img src="el-pollo-supremo-web/public/logo.png" alt="Logo de El Pollo Supremo" width="200"/>
+  <img src="public/logo.png" alt="Logo de El Pollo Supremo" width="200"/>
 </div>
 
 <p align="center">
