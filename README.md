@@ -102,6 +102,34 @@ Para poner en marcha el proyecto, necesitarás dos terminales abiertas:
 - **Terminal 1 (Backend):** `cd el-pollo-supremo-cms && npm run develop`
 - **Terminal 2 (Frontend):** `cd el-pollo-supremo-web && npm run dev`
 
-Luego, abre `http://localhost:3000` en tu navegador.
+## ✨ Visualización del Frontend ✨
 
----
+Aquí puedes ver algunas capturas de pantalla del sitio web en funcionamiento:
+
+### Página de Inicio
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 44 32 p m" src="https://github.com/user-attachments/assets/8f2848f3-4d2b-4eef-8db6-9c9fd77ad515" />
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 44 49 p m" src="https://github.com/user-attachments/assets/4176f254-72e2-4e01-8f42-0abab77c3bf8" />
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 45 03 p m" src="https://github.com/user-attachments/assets/decbcd4f-e416-45b3-a15e-ea172bbdc706" />
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 45 11 p m" src="https://github.com/user-attachments/assets/0556cef5-f915-4036-a4f0-b38cc7b527e6" />
+
+
+### Calendario de Torneos
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 45 35 p m" src="https://github.com/user-attachments/assets/6012be7b-8f78-447a-b7bd-364da0a40599" />
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 45 40 p m" src="https://github.com/user-attachments/assets/3b0e665c-72d5-4e18-bc11-3742828085a4" />
+
+### Videoteca Destacada
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 45 51 p m" src="https://github.com/user-attachments/assets/e85fe279-b8ce-41f2-a2e5-55eb2b13fb5c" />
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 46 02 p m" src="https://github.com/user-attachments/assets/bdbbdd04-5734-40bf-a46d-a96d580bfb7c" />
+
+### Tienda Oficial
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 46 14 p m" src="https://github.com/user-attachments/assets/7876e0e6-90c1-4aa8-b41d-f1d90c6f2d65" />
+
+### Página de Patrocinadores
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 46 24 p m" src="https://github.com/user-attachments/assets/0bd295ad-b5df-4afb-af46-6d216c4fbc6e" />
+
+### Página de Contacto
+<img width="800" height="1000" alt="Captura de pantalla 2025-07-23 a la(s) 9 46 36 p m" src="https://github.com/user-attachments/assets/dac21de7-21f8-48a6-854f-46473c496864" />
+
+
+
+
