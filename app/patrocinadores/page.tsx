@@ -5,7 +5,9 @@ import Image from 'next/image';
 import { FaPhone } from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 
-const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
+// URL fija para localhost - prueba diferentes puertos si es necesario
+const STRAPI_URL = 'http://127.0.0.1:1337';
+// Si no funciona, prueba con: 'http://localhost:1337'
 
 interface Sponsor {
   id: number;
@@ -17,7 +19,18 @@ interface Sponsor {
 async function getAllSponsors(): Promise<Sponsor[]> {
   try {
     const endpoint = `${STRAPI_URL}/api/patrocinadors?populate=logo`;
-    const res = await fetch(endpoint, { cache: 'no-store' });
+    console.log("Endpoint:", endpoint); // Para debug
+    console.log("Intentando conectar a Strapi...");
+    
+    const res = await fetch(endpoint, { 
+      cache: 'no-store',
+      method: 'GET',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    });
 
     if (!res.ok) {
       console.error("Error response from Strapi:", res.status, res.statusText);
@@ -25,23 +38,21 @@ async function getAllSponsors(): Promise<Sponsor[]> {
     }
 
     const jsonResponse = await res.json();
+    console.log("Response from Strapi:", jsonResponse); // Para debug
+    
     const sponsorsData = jsonResponse.data || [];
 
-    const formattedSponsors: Sponsor[] = sponsorsData.map((sponsor: any) => {
-      const attributes = sponsor.attributes;
-      const logoData = attributes.logo?.data?.attributes;
-      const logoUrl = logoData?.url
-        ? `${STRAPI_URL}${logoData.url}`
-        : '/placeholder-logo.png';
+    return sponsorsData.map((sponsor: any) => {
+      // Nueva estructura de Strapi - los datos están directamente en sponsor
+      const logoUrl = sponsor.logo?.url ? `${STRAPI_URL}${sponsor.logo.url}` : '/placeholder-logo.png';
 
       return {
         id: sponsor.id,
-        nombre: attributes.nombre,
+        nombre: sponsor.nombre,
         logoUrl: logoUrl,
-        numero_telefono: attributes.numero_telefono,
+        numero_telefono: sponsor.numero_telefono,
       };
     });
-    return formattedSponsors;
   } catch (error) {
     console.error("Error fetching sponsors:", error);
     return [];
@@ -51,18 +62,38 @@ async function getAllSponsors(): Promise<Sponsor[]> {
 export default function PatrocinadoresPage() {
   const [sponsors, setSponsors] = useState<Sponsor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getAllSponsors().then(data => {
-      setSponsors(data);
-      setIsLoading(false);
-    });
+    getAllSponsors()
+      .then(data => {
+        setSponsors(data);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.error("Error loading sponsors:", err);
+        setError("Error al cargar los patrocinadores");
+        setIsLoading(false);
+      });
   }, []);
 
   if (isLoading) {
     return (
       <div className="bg-negro-el-pollo text-white min-h-screen flex items-center justify-center">
         <p className="text-xl text-dorado-el-pollo-claro">Cargando patrocinadores...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-negro-el-pollo text-white min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-xl text-red-400 mb-4">{error}</p>
+          <p className="text-dorado-el-pollo-claro">
+            Asegúrate de que Strapi esté corriendo en http://localhost:1337
+          </p>
+        </div>
       </div>
     );
   }
@@ -90,6 +121,7 @@ export default function PatrocinadoresPage() {
                       alt={`Logo de ${sponsor.nombre}`}
                       fill
                       className="object-contain"
+                      onError={() => console.log(`Error loading image: ${sponsor.logoUrl}`)}
                     />
                   </div>
                   <h2 className="text-xl md:text-2xl font-bold text-white">{sponsor.nombre}</h2>
@@ -107,7 +139,12 @@ export default function PatrocinadoresPage() {
             ))}
           </div>
         ) : (
-          <p className="text-center text-gray-400">No hay patrocinadores para mostrar.</p>
+          <div className="text-center">
+            <p className="text-gray-400 mb-4">No hay patrocinadores para mostrar.</p>
+            <p className="text-sm text-dorado-el-pollo-claro">
+              Verifica que tengas datos en tu Strapi local (Content Type: patrocinadors)
+            </p>
+          </div>
         )}
         
         <div className="mt-20 bg-card-dark rounded-lg shadow-2xl overflow-hidden">
@@ -125,12 +162,13 @@ export default function PatrocinadoresPage() {
                 </Link>
               </div>
             </div>
-            <div className="relative min-h-[300px] md:min-h-full">
+            <div className="relative min-h-[300px] md:min-h-full overflow-hidden">
               <Image
                 src="/become-sponsor-placeholder.jpg"
                 alt="Aficionados al básquetbol de El Pollo Supremo"
                 fill
-                className="object-cover"
+                className="object-contain object-center scale-90"
+                priority
               />
             </div>
           </div>

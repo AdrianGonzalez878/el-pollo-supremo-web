@@ -41,7 +41,11 @@ export default function CategoryPage() {
 
         const formattedVideos: VideoWithCategory[] = videosData.map((video: any) => ({
           id: video.id,
-          ...video.attributes,
+          title: video.title,
+          video_url: video.video_url,
+          plataforma: video.plataforma,
+          miniatura_manual: video.miniatura_manual,
+          categoria_video: video.categoria_video,
         }));
         
         setVideos(formattedVideos);

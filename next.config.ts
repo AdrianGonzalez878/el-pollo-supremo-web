@@ -9,6 +9,12 @@ const nextConfig = {
         pathname: '/uploads/**',
       },
       {
+        protocol: 'http',
+        hostname: '127.0.0.1',  // <-- Agrega esta sección
+        port: '1337',
+        pathname: '/uploads/**',
+      },
+      {
         protocol: 'https',
         hostname: 'i.ytimg.com',
         port: '',
@@ -16,7 +22,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'el-pollo-supremo-cms.onrender.com', // Add this
+        hostname: 'el-pollo-supremo-cms.onrender.com',
         port: '',
         pathname: '/uploads/**',
       },

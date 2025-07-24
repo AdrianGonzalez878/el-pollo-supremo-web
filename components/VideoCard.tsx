@@ -38,7 +38,6 @@ export function VideoCard({ video }: { video: Video }) {
   }
 
   return (
-    // 1. Added 'video-card-link' to the main Link component
     <Link 
       href={video.video_url} 
       target="_blank" 
@@ -64,7 +63,6 @@ export function VideoCard({ video }: { video: Video }) {
           </div>
         </div>
       </div>
-      {/* 2. Added 'video-card-title' to the h3 and removed Tailwind hover classes */}
       <h3 className="mt-2 text-lg font-bold text-white transition-colors video-card-title">
         {video.title}
       </h3>
