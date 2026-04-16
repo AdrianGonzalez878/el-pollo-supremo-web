@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Marquee from "react-fast-marquee";
 
 interface Sponsor {
-  id: number;
+  id: string;
   nombre: string;
   logoUrl: string;
   numero_telefono?: number;

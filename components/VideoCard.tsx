@@ -1,58 +1,54 @@
 "use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
+import Link from "next/link";
 import { FaFacebook, FaYoutube } from "react-icons/fa";
+import { getYouTubeThumbnailUrl } from "@/lib/video-thumbnail";
 
 export interface Video {
-  id: number;
+  id: string;
   title: string;
   video_url: string;
-  plataforma: 'YouTube' | 'Facebook';
-  miniatura_manual?: any;
+  plataforma: "YouTube" | "Facebook";
+  /** URL final de miniatura (Sanity, automática YouTube/Facebook en servidor, o vacío). */
+  miniatura_manual?: { url: string };
 }
 
-function getYouTubeId(url: string): string | null {
-  if (!url) return null;
-  const regExp = /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?|shorts)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-  const match = url.match(regExp);
-  return match ? match[1] : null;
-}
+const PLACEHOLDER = "/placeholder-video.svg";
 
 export function VideoCard({ video }: { video: Video }) {
-  let thumbnailUrl = '/placeholder-video.jpg';
-  let providerIcon;
+  const thumbnailUrl =
+    video.miniatura_manual?.url ||
+    (video.plataforma === "YouTube"
+      ? getYouTubeThumbnailUrl(video.video_url)
+      : null) ||
+    PLACEHOLDER;
 
-  if (video.plataforma === 'YouTube') {
-    const videoId = getYouTubeId(video.video_url);
-    if (videoId) {
-      thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-    }
-    providerIcon = <FaYoutube className="w-8 h-8 text-white" />;
-  } else if (video.plataforma === 'Facebook') {
-    const STRAPI_URL = 'http://localhost:1337';
-    if (video.miniatura_manual?.url) {
-      thumbnailUrl = `${STRAPI_URL}${video.miniatura_manual.url}`;
-    }
-    providerIcon = <FaFacebook className="w-8 h-8 text-white" />;
-  }
+  const providerIcon =
+    video.plataforma === "Facebook" ? (
+      <FaFacebook className="w-8 h-8 text-white" />
+    ) : (
+      <FaYoutube className="w-8 h-8 text-white" />
+    );
 
   return (
-    <Link 
-      href={video.video_url} 
-      target="_blank" 
-      rel="noopener noreferrer" 
+    <Link
+      href={video.video_url}
+      target="_blank"
+      rel="noopener noreferrer"
       className="block group video-card-link"
     >
-      <div className="relative overflow-hidden rounded-lg shadow-lg">
-        <Image
+      <div className="relative overflow-hidden rounded-lg shadow-lg aspect-video bg-neutral-900">
+        {/* eslint-disable-next-line @next/next/no-img-element -- URLs de YouTube/Facebook CDN; evita listar todos los hosts en next.config */}
+        <img
           src={thumbnailUrl}
           alt={video.title}
           width={1280}
           height={720}
-          className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        <div 
+        <div
           className="absolute inset-0 flex items-center justify-center 
                      bg-black/50 
                      opacity-0 group-hover:opacity-100 

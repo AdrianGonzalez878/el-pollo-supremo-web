@@ -1,10 +1,10 @@
 "use client";
 
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
+import { PremiosMarkdown } from '@/components/PremiosMarkdown';
 
 export interface Game {
-  id: number;
+  id: string;
   date: string;
   time: string;
   rawDate: string; // Es crucial tener la fecha original para comparar
@@ -54,11 +54,9 @@ export function GameCard({ game }: { game: Game }) {
               </div>
             )}
             {game.premios && (
-              <div className="text-sm">
-                <p className="font-semibold text-gray-300 mb-1">Premios:</p>
-                <div className="prose prose-sm prose-invert">
-                  <ReactMarkdown>{game.premios}</ReactMarkdown>
-                </div>
+              <div className="premios-markdown__shell mt-1">
+                <p className="premios-markdown__label">Premios</p>
+                <PremiosMarkdown content={game.premios} />
               </div>
             )}
           </div>

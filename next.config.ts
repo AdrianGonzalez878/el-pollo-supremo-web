@@ -1,33 +1,22 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '1337',
-        pathname: '/uploads/**',
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+        port: "",
+        pathname: "/images/**",
       },
       {
-        protocol: 'http',
-        hostname: '127.0.0.1',  // <-- Agrega esta sección
-        port: '1337',
-        pathname: '/uploads/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'i.ytimg.com',
-        port: '',
-        pathname: '/vi/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'el-pollo-supremo-cms.onrender.com',
-        port: '',
-        pathname: '/uploads/**',
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        port: "",
+        pathname: "/vi/**",
       },
     ],
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

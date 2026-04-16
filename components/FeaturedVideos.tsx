@@ -1,38 +1,9 @@
-
-import Link from 'next/link';
-import { type Video } from './VideoCard';
-import { FeaturedVideosCarousel } from './FeaturedVideosCarousel';
-
-const STRAPI_URL = 'http://localhost:1337';
-
-// ESTA FUNCIÓN AHORA ES IDÉNTICA A LA DE LA PÁGINA DE VIDEOTECA
-async function getFeaturedVideos(): Promise<Video[]> {
-  try {
-    // 1. Pedimos los nuevos campos y poblamos la miniatura manual
-    const res = await fetch(`${STRAPI_URL}/api/videos?populate=miniatura_manual&fields[0]=title&fields[1]=video_url&fields[2]=plataforma&sort=publishedAt:desc&pagination[limit]=9`);
-    if (!res.ok) throw new Error('Failed to fetch featured videos');
-
-    const jsonResponse = await res.json();
-    const videos = jsonResponse.data.filter((video: any) => video);
-
-    // 2. Mapeamos todos los datos necesarios que espera la VideoCard
-    const formattedVideos: Video[] = videos.map((video: any) => ({
-      id: video.id,
-      title: video.title,
-      video_url: video.video_url,
-      plataforma: video.plataforma,
-      miniatura_manual: video.miniatura_manual,
-    }));
-
-    return formattedVideos;
-  } catch (error) {
-    console.error("Error fetching featured videos:", error);
-    return [];
-  }
-}
+import Link from "next/link";
+import { FeaturedVideosCarousel } from "./FeaturedVideosCarousel";
+import { fetchFeaturedVideos } from "@/lib/sanity/loaders";
 
 export async function FeaturedVideos() {
-  const featuredVideos = await getFeaturedVideos();
+  const featuredVideos = await fetchFeaturedVideos();
 
   return (
     <section className="py-12 bg-card-dark">
@@ -49,7 +20,9 @@ export async function FeaturedVideos() {
         {featuredVideos.length > 0 ? (
           <FeaturedVideosCarousel videos={featuredVideos} />
         ) : (
-          <p className="text-center text-gray-400">No hay videos destacados en este momento.</p>
+          <p className="text-center text-gray-400">
+            No hay videos destacados en este momento.
+          </p>
         )}
 
         <div className="text-center mt-12">
