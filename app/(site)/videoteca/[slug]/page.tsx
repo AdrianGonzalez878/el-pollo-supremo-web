@@ -2,6 +2,8 @@ import Link from "next/link";
 import { VideoCard, Video } from "@/components/VideoCard";
 import { fetchVideosByCategorySlug } from "@/lib/sanity/loaders";
 
+export const revalidate = 120;
+
 interface VideoWithCategory extends Video {
   plataforma: "YouTube" | "Facebook";
   miniatura_manual?: { url: string };

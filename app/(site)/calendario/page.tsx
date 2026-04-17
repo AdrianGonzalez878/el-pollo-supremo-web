@@ -3,6 +3,8 @@ import type { Game } from "@/components/GameCard";
 import { PremiosMarkdown } from "@/components/PremiosMarkdown";
 import { fetchPartidos } from "@/lib/sanity/loaders";
 
+export const revalidate = 120;
+
 function TournamentRow({ game }: { game: Game }) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);

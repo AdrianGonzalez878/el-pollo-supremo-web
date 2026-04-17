@@ -1,8 +1,10 @@
-// app/videoteca/page.tsx
+// app/(site)/videoteca/page.tsx
 import { VideoCard, Video } from "@/components/VideoCard";
 import Link from "next/link";
 import { fetchVideos } from "@/lib/sanity/loaders";
 import { slugify } from "@/lib/slugify";
+
+export const revalidate = 120;
 
 interface VideoWithCategory extends Video {
   plataforma: "YouTube" | "Facebook";

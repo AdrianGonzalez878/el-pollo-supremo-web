@@ -3,6 +3,8 @@ import Image from "next/image";
 import { FaPhone } from "react-icons/fa";
 import { fetchPatrocinadores } from "@/lib/sanity/loaders";
 
+export const revalidate = 120;
+
 export default async function PatrocinadoresPage() {
   const sponsors = await fetchPatrocinadores();
 
