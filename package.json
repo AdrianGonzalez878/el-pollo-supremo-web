@@ -12,6 +12,8 @@
     "studio": "sanity dev --port 3333"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.5.0",
+    "@vercel/speed-insights": "^1.2.0",
     "@sanity/client": "^7.21.0",
     "@sanity/image-url": "^2.1.1",
     "embla-carousel-react": "^8.6.0",

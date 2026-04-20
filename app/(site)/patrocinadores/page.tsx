@@ -15,7 +15,7 @@ export default async function PatrocinadoresPage() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-dorado-el-pollo">
             Nuestros Patrocinadores
           </h1>
-          <p className="text-dorado-el-pollo-claro mt-3 max-w-2xl mx-auto">
+          <p className="text-white mt-3 max-w-2xl mx-auto leading-relaxed">
             Un agradecimiento especial a las marcas y personas que apoyan el básquetbol en Oaxaca.
           </p>
         </div>
@@ -66,7 +66,7 @@ export default async function PatrocinadoresPage() {
               <h2 className="text-2xl md:text-3xl font-bold text-dorado-el-pollo mb-4">
                 ¿Quieres ser parte de la familia?
               </h2>
-              <p className="text-dorado-el-pollo-claro mb-8">
+              <p className="text-white mb-8 leading-relaxed">
                 Expón tu marca ante miles de aficionados al básquetbol en todo el estado y apoya el
                 deporte local. ¡Contáctanos para conocer nuestros paquetes de patrocinio!
               </p>

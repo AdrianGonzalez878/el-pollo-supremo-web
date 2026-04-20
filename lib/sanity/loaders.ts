@@ -90,7 +90,9 @@ function mapPartidoToGame(doc: {
         weekday: "short",
         day: "numeric",
         month: "short",
+        year: "numeric",
       })
+      .replace(/\./g, "")
       .toUpperCase(),
     time: formatTime(doc.time),
     merce_link: doc.merce_link,
