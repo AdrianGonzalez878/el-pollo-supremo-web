@@ -101,7 +101,7 @@ export default async function CalendarPage() {
           Calendario de Merces
         </h1>
         <p className="text-center text-gray-400 text-sm sm:text-base max-w-xl mx-auto mb-12">
-          Fechas con año para ubicar cada torneo en el historial del básquet oaxaqueño.
+          Fechas para ubicar cada torneo en el historial del básquet oaxaqueño.
         </p>
 
         <section className="mb-16 title-container">
