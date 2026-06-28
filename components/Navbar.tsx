@@ -75,7 +75,9 @@ export function Navbar() {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-white z-50 focus:outline-none w-7 h-7 flex flex-col justify-center items-center"
-              aria-label="Abrir menú"
+              aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
               <span className={`block w-full h-0.5 bg-white transition-transform duration-300 ease-in-out ${isMenuOpen ? 'rotate-45 translate-y-1' : ''}`}></span>
               <span className={`block w-full h-0.5 bg-white my-1 transition-opacity duration-300 ease-in-out ${isMenuOpen ? 'opacity-0' : ''}`}></span>
@@ -86,7 +88,11 @@ export function Navbar() {
       </header>
       
       {/* Full-screen Overlay Menu */}
-      <div 
+      <div
+        id="mobile-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menú de navegación"
         className={`fixed inset-0 z-40 bg-negro-el-pollo transition-opacity duration-300 ease-in-out md:hidden
                    ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       >

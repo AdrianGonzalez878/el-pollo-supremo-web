@@ -24,7 +24,6 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Estilos para los enlaces del Navbar */
@@ -82,6 +81,71 @@ body {
   background-color: var(--color-card);
 }
 
+
+/* ─── Cross-browser / performance safeguards ─────────────────────────────── */
+
+/* Release will-change after animation completes to free GPU memory.
+   Framer Motion adds will-change inline; this overrides it for static elements. */
+[style*="will-change: auto"] {
+  will-change: auto;
+}
+
+/* Ensure content is always visible when JS is blocked, disabled, or slow.
+   Framer Motion sets opacity: 0 via inline styles; without JS those stay.
+   The noscript tag in HTML is the safest guard, but this CSS handles edge cases. */
+@media (scripting: none) {
+  [style*="opacity: 0"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ─── Section heading with gold underline accent ──────────────────────────── */
+/* Section heading with gold underline accent */
+.section-heading {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+}
+.section-heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 3rem;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-gold), transparent);
+  border-radius: 9999px;
+}
+.section-heading--center::after {
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4rem;
+}
+
+/* Gold filled button */
+.btn-gold {
+  background-color: var(--color-gold);
+  color: #111111;
+  border: 2px solid var(--color-gold);
+  font-weight: 700;
+  transition: all 0.3s ease-in-out;
+}
+.btn-gold:hover {
+  background-color: transparent;
+  color: var(--color-gold);
+  transform: scale(1.05);
+}
+
+/* Card with hover glow */
+.card-glow {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.card-glow:hover {
+  box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 215, 0, 0.3);
+  transform: translateY(-2px);
+}
 
 /* Estilos para el Carrusel Embla */
 .embla__container {

@@ -15,7 +15,6 @@ export async function UpcomingGames() {
   pastGames.sort(
     (a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime(),
   );
-
   upcomingGames.sort(
     (a, b) => new Date(a.rawDate).getTime() - new Date(b.rawDate).getTime(),
   );
@@ -23,13 +22,13 @@ export async function UpcomingGames() {
   const sortedGames: Game[] = [...pastGames, ...upcomingGames];
 
   return (
-    <section className="py-12 bg-negro-el-pollo">
+    <section className="py-16 bg-negro-el-pollo">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-10 title-container">
-          <h2 className="text-3xl md:text-4xl font-bold text-white title">
-            Revive las ultimas Merces
+        <div className="text-center mb-12">
+          <h2 className="section-heading section-heading--center text-3xl md:text-4xl font-bold text-white">
+            Revive las Últimas Merces
           </h2>
-          <p className="text-white mt-2 subtitle">¡Desliza para ver los encuentros!</p>
+          <p className="text-gray-400 mt-4">¡Desliza para ver los encuentros!</p>
         </div>
 
         {sortedGames.length > 0 ? (
@@ -38,10 +37,10 @@ export async function UpcomingGames() {
           <p className="text-center text-gray-400">No hay partidos disponibles.</p>
         )}
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-14">
           <Link
             href="/calendario"
-            className="main-button font-bold py-3 px-8 rounded-full text-lg"
+            className="btn-gold py-3 px-8 rounded-full text-base font-bold shadow-lg shadow-dorado-el-pollo/20"
           >
             Ver Calendario Completo
           </Link>

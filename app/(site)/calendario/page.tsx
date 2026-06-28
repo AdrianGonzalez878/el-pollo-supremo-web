@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Game } from "@/components/GameCard";
 import { PremiosMarkdown } from "@/components/PremiosMarkdown";
+import { AnimateOnScroll } from "@/components/AnimateOnScroll";
+import { StaggerGrid, StaggerItem } from "@/components/StaggerGrid";
 import { fetchPartidos } from "@/lib/sanity/loaders";
 import { getMerceDateParts, groupGamesByYear } from "@/lib/calendar-date";
 
@@ -41,7 +43,7 @@ function TournamentRow({ game }: { game: Game }) {
         <div className="flex-shrink-0 w-full md:w-auto border-t md:border-t-0 md:border-l border-gray-700 mt-4 md:mt-0 pt-4 md:pt-0 md:pl-6 text-left">
           {game.equipo_ganador && (
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-amber-500 text-lg">{"\u{1F3C6}"}</span>
+              <span className="text-amber-500 text-lg" aria-hidden="true">🏆</span>
               <p className="font-semibold text-dorado-el-pollo-claro">
                 Ganador: {game.equipo_ganador}
               </p>
@@ -97,62 +99,77 @@ export default async function CalendarPage() {
   return (
     <div className="bg-negro-el-pollo text-white min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 py-12 max-w-5xl">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-dorado-el-pollo text-center mb-3">
-          Calendario de Merces
-        </h1>
-        <p className="text-center text-gray-400 text-sm sm:text-base max-w-xl mx-auto mb-12">
-          Fechas para ubicar cada torneo en el historial del básquet oaxaqueño.
-        </p>
 
-        <section className="mb-16 title-container">
-          <h2 className="text-2xl md:text-3xl font-bold border-b-2 border-dorado-el-pollo/30 pb-2 mb-6 text-white title">
-            Próximas Merces
-          </h2>
-          {upcomingGames.length > 0 ? (
-            <div className="space-y-10">
-              {upcomingByYear.map(({ year, games }) => (
-                <div key={year}>
-                  {upcomingByYear.length > 1 && (
-                    <h3 className="text-sm font-bold tracking-widest text-dorado-el-pollo/80 uppercase mb-3">
+        {/* Page header */}
+        <AnimateOnScroll>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-dorado-el-pollo text-center mb-3">
+            Calendario de Merces
+          </h1>
+          <p className="text-center text-gray-400 text-sm sm:text-base max-w-xl mx-auto mb-12">
+            Fechas para ubicar cada torneo en el historial del básquet oaxaqueño.
+          </p>
+        </AnimateOnScroll>
+
+        {/* Upcoming */}
+        <AnimateOnScroll delay={0.1}>
+          <section className="mb-16">
+            <h2 className="section-heading text-2xl md:text-3xl font-bold pb-2 mb-8 text-white">
+              Próximas Merces
+            </h2>
+            {upcomingGames.length > 0 ? (
+              <div className="space-y-10">
+                {upcomingByYear.map(({ year, games }) => (
+                  <div key={year}>
+                    {upcomingByYear.length > 1 && (
+                      <h3 className="text-sm font-bold tracking-widest text-dorado-el-pollo/80 uppercase mb-3">
+                        {year}
+                      </h3>
+                    )}
+                    <StaggerGrid className="space-y-4">
+                      {games.map((game) => (
+                        <StaggerItem key={game.id}>
+                          <TournamentRow game={game} />
+                        </StaggerItem>
+                      ))}
+                    </StaggerGrid>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-400">No hay torneos programados próximamente.</p>
+            )}
+          </section>
+        </AnimateOnScroll>
+
+        {/* Past */}
+        <AnimateOnScroll delay={0.15}>
+          <section>
+            <h2 className="section-heading text-2xl md:text-3xl font-bold pb-2 mb-8 text-white">
+              Merces Pasadas
+            </h2>
+            {pastGames.length > 0 ? (
+              <div className="space-y-12">
+                {pastByYear.map(({ year, games }) => (
+                  <div key={year}>
+                    <h3 className="sticky top-0 z-10 -mx-2 px-2 py-2 mb-4 text-lg font-extrabold text-dorado-el-pollo bg-negro-el-pollo/90 border-b border-dorado-el-pollo/20 backdrop-blur-sm">
                       {year}
                     </h3>
-                  )}
-                  <div className="space-y-4">
-                    {games.map((game) => (
-                      <TournamentRow key={game.id} game={game} />
-                    ))}
+                    <StaggerGrid className="space-y-4">
+                      {games.map((game) => (
+                        <StaggerItem key={game.id}>
+                          <TournamentRow game={game} />
+                        </StaggerItem>
+                      ))}
+                    </StaggerGrid>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-400">No hay torneos programados próximamente.</p>
-          )}
-        </section>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-400">Aún no hay historial de torneos pasados.</p>
+            )}
+          </section>
+        </AnimateOnScroll>
 
-        <section className="title-container">
-          <h2 className="text-2xl md:text-3xl font-bold border-b-2 border-dorado-el-pollo/30 pb-2 mb-6 text-white title">
-            Merces Pasadas
-          </h2>
-          {pastGames.length > 0 ? (
-            <div className="space-y-12">
-              {pastByYear.map(({ year, games }) => (
-                <div key={year}>
-                  <h3 className="sticky top-0 z-10 -mx-2 px-2 py-2 mb-4 text-lg font-extrabold text-dorado-el-pollo bg-negro-el-pollo/90 border-b border-dorado-el-pollo/20 backdrop-blur-sm">
-                    {year}
-                  </h3>
-                  <div className="space-y-4">
-                    {games.map((game) => (
-                      <TournamentRow key={game.id} game={game} />
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-400">Aún no hay historial de torneos pasados.</p>
-          )}
-        </section>
       </div>
     </div>
   );

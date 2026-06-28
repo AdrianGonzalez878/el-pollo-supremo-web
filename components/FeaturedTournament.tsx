@@ -30,12 +30,13 @@ export function FeaturedTournament({ imageUrl }: Props) {
             </p>
           </div>
 
-          <div 
+          <div
             onClick={() => setOpen(true)}
             className="w-full max-w-4xl mx-auto block group cursor-pointer"
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => e.key === 'Enter' && setOpen(true)}
+            aria-label="Ver flyer del próximo torneo en tamaño completo"
+            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setOpen(true)}
           >
             <Image
               src={imageUrl}

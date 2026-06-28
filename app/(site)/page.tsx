@@ -8,7 +8,6 @@ import { StatsSection } from "@/components/StatsSection";
 import { AnimateOnScroll } from "@/components/AnimateOnScroll";
 import { fetchHomepageImages } from "@/lib/sanity/loaders";
 
-/** Fallback if the Sanity revalidate webhook is not configured or fails (~2 min). */
 export const revalidate = 120;
 
 export default async function HomePage() {
@@ -16,7 +15,8 @@ export default async function HomePage() {
 
   return (
     <>
-      <AnimateOnScroll>
+      {/* Hero: no delay, fade from none */}
+      <AnimateOnScroll direction="none">
         <Hero imageUrl={heroImageUrl} />
       </AnimateOnScroll>
 

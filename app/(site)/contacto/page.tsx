@@ -2,109 +2,182 @@
 
 import { FaFacebook, FaYoutube, FaInstagram, FaTiktok } from "react-icons/fa";
 import { MdEmail, MdPhone } from "react-icons/md";
+import { AnimateOnScroll } from "@/components/AnimateOnScroll";
+
+const socialLinks = [
+  {
+    href: "https://www.facebook.com/ElPolloSumpremoTLAXIACO",
+    icon: FaFacebook,
+    label: "Facebook",
+    color: "text-blue-400 hover:bg-blue-500/10",
+  },
+  {
+    href: "https://www.youtube.com/@pollosupremotlaxiaco",
+    icon: FaYoutube,
+    label: "YouTube",
+    color: "text-red-400 hover:bg-red-500/10",
+  },
+  {
+    href: "https://www.instagram.com/el_pollo_supremo_/",
+    icon: FaInstagram,
+    label: "Instagram",
+    color: "text-pink-400 hover:bg-pink-500/10",
+  },
+  {
+    href: "https://www.tiktok.com/@el.pollo.supremo",
+    icon: FaTiktok,
+    label: "TikTok",
+    color: "text-white hover:bg-white/10",
+  },
+];
+
+const inputClass =
+  "w-full bg-negro-el-pollo text-white placeholder-gray-600 p-3 rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-dorado-el-pollo focus:border-transparent transition-all";
 
 export default function ContactPage() {
   return (
     <div className="bg-negro-el-pollo py-16 min-h-screen">
-      <div className="container mx-auto px-6 text-center">
-        {/* Main title is static gold */}
-        <h1 className="text-4xl md:text-5xl font-extrabold text-dorado-el-pollo mb-4">Contacto</h1>
-        <p className="text-white max-w-2xl mx-auto mb-10">
-          ¿Interesado en una transmisión para tu torneo? ¿Quieres ser patrocinador? ¡Contáctanos!
-        </p>
+      <div className="container mx-auto px-6">
 
-        <div className="max-w-4xl mx-auto bg-card-dark p-8 rounded-lg shadow-2xl">
-          
-          <div className="mb-8">
-            <div className="title-container">
-              <h2 className="text-2xl font-bold text-white mb-4 title">Información Directa</h2>
-            </div>
-            <div className="flex flex-col md:flex-row justify-center items-center gap-x-8 gap-y-4">
-                {/* Links are now white with gold hover */}
-                <a href="tel:+529531092560" className="flex items-center gap-2 text-lg contact-link">
-                    <MdPhone />
-                    +52 953 109 2560
-                </a>
-                <a href="mailto:ojeda.martinez09@gmail.com" className="flex items-center gap-2 text-lg contact-link">
-                    <MdEmail />
-                    ojeda.martinez09@gmail.com
-                </a>
-            </div>
+        {/* Header */}
+        <AnimateOnScroll>
+          <div className="text-center mb-12">
+            <h1 className="section-heading section-heading--center text-4xl md:text-5xl font-extrabold text-dorado-el-pollo">
+              Contacto
+            </h1>
+            <p className="text-gray-400 max-w-2xl mx-auto mt-5 leading-relaxed">
+              ¿Interesado en una transmisión para tu torneo? ¿Quieres ser patrocinador? ¡Contáctanos!
+            </p>
+          </div>
+        </AnimateOnScroll>
+
+        <div className="max-w-4xl mx-auto space-y-6">
+
+          {/* Direct contact + Social */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <AnimateOnScroll direction="left" delay={0.1}>
+              <div className="bg-card-dark rounded-2xl border border-gray-800 p-8 h-full">
+                <h2 className="text-xl font-bold text-white mb-6 section-heading">Información Directa</h2>
+                <div className="flex flex-col gap-4">
+                  <a
+                    href="tel:+529531092560"
+                    className="flex items-center gap-3 text-gray-300 hover:text-dorado-el-pollo transition-colors group"
+                  >
+                    <span className="flex items-center justify-center w-10 h-10 rounded-full bg-dorado-el-pollo/10 group-hover:bg-dorado-el-pollo/20 transition-colors">
+                      <MdPhone className="w-5 h-5 text-dorado-el-pollo" aria-hidden="true" />
+                    </span>
+                    <span className="font-medium">+52 953 109 2560</span>
+                  </a>
+                  <a
+                    href="mailto:ojeda.martinez09@gmail.com"
+                    className="flex items-center gap-3 text-gray-300 hover:text-dorado-el-pollo transition-colors group"
+                  >
+                    <span className="flex items-center justify-center w-10 h-10 rounded-full bg-dorado-el-pollo/10 group-hover:bg-dorado-el-pollo/20 transition-colors">
+                      <MdEmail className="w-5 h-5 text-dorado-el-pollo" aria-hidden="true" />
+                    </span>
+                    <span className="font-medium break-all">ojeda.martinez09@gmail.com</span>
+                  </a>
+                </div>
+              </div>
+            </AnimateOnScroll>
+
+            <AnimateOnScroll direction="right" delay={0.1}>
+              <div className="bg-card-dark rounded-2xl border border-gray-800 p-8 h-full">
+                <h2 className="text-xl font-bold text-white mb-6 section-heading">Síguenos en Redes</h2>
+                <div className="flex flex-wrap gap-3">
+                  {socialLinks.map(({ href, icon: Icon, label, color }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className={`flex items-center gap-2 px-4 py-2.5 rounded-full border border-gray-700 ${color} transition-all`}
+                    >
+                      <Icon className="w-4 h-4" aria-hidden="true" />
+                      <span className="text-sm font-medium text-white">{label}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </AnimateOnScroll>
           </div>
 
-          <hr className="border-gray-700 my-8" />
+          {/* Contact form */}
+          <AnimateOnScroll delay={0.2}>
+            <div className="bg-card-dark rounded-2xl border border-gray-800 p-8">
+              <h2 className="text-xl font-bold text-white mb-8 section-heading">Envíanos un Mensaje</h2>
+              <form
+                action="https://formspree.io/f/YOUR_UNIQUE_ID"
+                method="POST"
+                className="grid grid-cols-1 md:grid-cols-2 gap-5"
+              >
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="name" className="text-sm font-semibold text-gray-400 uppercase tracking-wide">
+                    Nombre
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    placeholder="Tu nombre completo"
+                    required
+                    className={inputClass}
+                  />
+                </div>
 
-          <div className="mb-10">
-            <div className="title-container">
-              <h2 className="text-2xl font-bold text-white mb-4 title">Síguenos en Redes</h2>
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="email" className="text-sm font-semibold text-gray-400 uppercase tracking-wide">
+                    Correo Electrónico
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="tu@correo.com"
+                    required
+                    className={inputClass}
+                  />
+                </div>
+
+                <div className="md:col-span-2 flex flex-col gap-1.5">
+                  <label htmlFor="subject" className="text-sm font-semibold text-gray-400 uppercase tracking-wide">
+                    Asunto
+                  </label>
+                  <input
+                    id="subject"
+                    type="text"
+                    name="subject"
+                    placeholder="¿En qué podemos ayudarte?"
+                    className={inputClass}
+                  />
+                </div>
+
+                <div className="md:col-span-2 flex flex-col gap-1.5">
+                  <label htmlFor="message" className="text-sm font-semibold text-gray-400 uppercase tracking-wide">
+                    Mensaje
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows={5}
+                    placeholder="Escribe tu mensaje aquí..."
+                    required
+                    className={inputClass}
+                  />
+                </div>
+
+                <div className="md:col-span-2 flex justify-end">
+                  <button
+                    type="submit"
+                    className="btn-gold py-3 px-10 rounded-full text-base font-bold shadow-lg shadow-dorado-el-pollo/20"
+                  >
+                    Enviar Mensaje
+                  </button>
+                </div>
+              </form>
             </div>
-            <div className="flex justify-center space-x-6">
-              <a href="https://www.facebook.com/ElPolloSumpremoTLAXIACO" target="_blank" rel="noopener noreferrer" title="Facebook" className="text-blue-600 transition-transform hover:scale-110">
-                <FaFacebook className="w-8 h-8" />
-              </a>
-              <a href="#" target="_blank" rel="noopener noreferrer" title="YouTube" className="text-red-600 transition-transform hover:scale-110">
-                <FaYoutube className="w-8 h-8" />
-              </a>
-              <a href="https://www.instagram.com/el_pollo_supremo_/" target="_blank" rel="noopener noreferrer" title="Instagram" className="text-pink-600 transition-transform hover:scale-110">
-                <FaInstagram className="w-8 h-8" />
-              </a>
-              <a href="https://www.tiktok.com/@el.pollo.supremo" target="_blank" rel="noopener noreferrer" title="TikTok" className="text-white transition-transform hover:scale-110">
-                <FaTiktok className="w-8 h-8" />
-              </a>
-            </div>
-          </div>
-          
-          <hr className="border-gray-700 my-8" />
-
-          <div>
-            <div className="title-container">
-              <h2 className="text-2xl font-bold text-white mb-4 title">Envíanos un Mensaje</h2>
-            </div>
-            {/* Form updated with new fields */}
-            <form action="https://formspree.io/f/YOUR_UNIQUE_ID" method="POST" className="flex flex-col gap-4 text-left">
-              <label htmlFor="name" className="text-dorado-el-pollo-claro">Nombre</label>
-              <input 
-                id="name"
-                type="text" 
-                name="name" 
-                placeholder="Tu nombre completo" 
-                required 
-                className="bg-gray-800 text-white p-3 rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-dorado-el-pollo" 
-              />
-
-              <label htmlFor="email" className="text-dorado-el-pollo-claro">Correo Electrónico</label>
-              <input 
-                id="email"
-                type="email" 
-                name="email" 
-                placeholder="Tu correo electrónico" 
-                required 
-                className="bg-gray-800 text-white p-3 rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-dorado-el-pollo" 
-              />
-
-              <label htmlFor="subject" className="text-dorado-el-pollo-claro">Asunto</label>
-              <input 
-                id="subject"
-                type="text" 
-                name="subject" 
-                placeholder="Asunto del mensaje" 
-                className="bg-gray-800 text-white p-3 rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-dorado-el-pollo" 
-              />
-
-              <label htmlFor="message" className="text-dorado-el-pollo-claro">Mensaje</label>
-              <textarea 
-                id="message"
-                name="message" 
-                rows={5} 
-                placeholder="Escribe tu mensaje aquí..." 
-                required 
-                className="bg-gray-800 text-white p-3 rounded-md border border-gray-700 focus:outline-none focus:ring-2 focus:ring-dorado-el-pollo"
-              ></textarea>
-              <button type="submit" className="main-button font-bold py-3 px-8 rounded-full text-lg self-center mt-4">
-                Enviar Mensaje
-              </button>
-            </form>
-          </div>
+          </AnimateOnScroll>
 
         </div>
       </div>
